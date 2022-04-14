@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import * as picomatch from 'picomatch';
 import * as rbac from '../rbac';
 import * as util from '../util';
 import { Config, ConfigInterface } from '../config';
@@ -358,7 +359,7 @@ export class Model {
       let matched = true;
       for (let i = 0; i < fieldValues.length; i++) {
         const fieldValue = fieldValues[i];
-        if (fieldValue !== '' && rule[fieldIndex + i] !== fieldValue) {
+        if (fieldValue !== '' && rule[fieldIndex + i] !== fieldValue && !picomatch.isMatch(rule[fieldIndex + i], fieldValue)) {
           matched = false;
           break;
         }
